@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Tenses Learning Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tenses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .tense-btn {
+            background: white;
+            border: none;
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tense-number {
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .tense-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: white;
+        }
+
+        .tense-btn:hover .tense-number {
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            color: #333;
+            transform: scale(1.1);
+        }
+
+        .tense-btn.active {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-height: 70vh;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tense-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .tense-header h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            padding: 18px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            font-weight: 600;
+            color: #333;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background: #f0f8ff;
+        }
+
+        .examples-section {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 6px solid #f39c12;
+        }
+
+        .examples-section h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .example {
+            background: white;
+            padding: 12px 18px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border-left: 4px solid #007bff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .indicators {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border-left: 6px solid #28a745;
+        }
+
+        .indicators h3 {
+            color: #155724;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #6c757d, #5a6268);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(108, 117, 125, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .tenses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .tense-number {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📚 Notes Prepared by Ramanuj Kirti Sir</h1>
+
+        <div class="tenses-grid" id="tensesGrid">
+            <!-- Buttons will be populated by JavaScript -->
+        </div>
+
+        <div class="content" id="tenseContent">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const tensesData = [
+            {
+                number: 1,
+                name: "Simple Present",
+                fullName: "1) Simple Present (Present Indefinite)",
+                structures: [
+                    { subject: "I / You / We / They (plural)", formula: "Subject + V1 + Object", explanation: "Use base verb (V1) for habits, routines, general truths." },
+                    { subject: "He / She / It / Name (singular)", formula: "Subject + V1 + s/es + Object", explanation: "Add s/es for 3rd person singular." }
+                ],
+                indicators: "always, usually, often, sometimes, never, every day, every week, daily, generally, normally, seldom, rarely, once a week, twice a month, on Sundays, as a rule, habitually, regularly, frequently, ordinarily",
+                examples: [
+                    "I eat rice daily.",
+                    "She plays football every evening.",
+                    "They always help their friends."
+                ]
+            },
+            {
+                number: 2,
+                name: "Present Continuous",
+                fullName: "2) Present Continuous (Present Progressive)",
+                structures: [
+                    { subject: "I", formula: "I am + V1-ing", explanation: "Action happening now / around now / temporary." },
+                    { subject: "He / She / It", formula: "He/She/It is + V1-ing", explanation: "Use is for 3rd person singular." },
+                    { subject: "You / We / They", formula: "You/We/They are + V1-ing", explanation: "Use are for plural & you." }
+                ],
+                indicators: "now, right now, at the moment, currently, just now, presently, these days, nowadays (when temporary), still, today, this morning, this week, for the time being, as we speak, at present, temporarily, currently, right away, look!, listen!, at work now, at home now",
+                examples: [
+                    "I am eating now.",
+                    "She is playing football right now.",
+                    "They are watching TV at the moment."
+                ]
+            },
+            {
+                number: 3,
+                name: "Present Perfect",
+                fullName: "3) Present Perfect",
+                structures: [
+                    { subject: "I / We / You / They", formula: "Subject + have + V3", explanation: "Action completed at unspecified time with present relevance." },
+                    { subject: "He / She / It / Name", formula: "Subject + has + V3", explanation: "Use has for 3rd person singular." }
+                ],
+                indicators: "already, yet, just, ever, never, so far, up to now, till now, recently, lately, for (with period when result matters), since (with start point), previously, before, in recent times, this week (when completed), once, several times",
+                examples: [
+                    "I have eaten rice.",
+                    "She has played football.",
+                    "They have helped their friends."
+                ]
+            },
+            {
+                number: 4,
+                name: "Present Perfect Continuous",
+                fullName: "4) Present Perfect Continuous",
+                structures: [
+                    { subject: "I / We / You / They", formula: "Subject + have been + V1-ing", explanation: "Action started in past, continued up to now; emphasis on duration." },
+                    { subject: "He / She / It / Name", formula: "Subject + has been + V1-ing", explanation: "Use has been for 3rd person singular." }
+                ],
+                indicators: "have been, has been, since, for, recently, lately, all day, all week, all month, for a long time, for two hours, since morning, since yesterday, up till now, till now, these days, continuously, still, so far, for several hours, since then, for many years",
+                examples: [
+                    "I have been eating for 2 hours.",
+                    "She has been playing since morning.",
+                    "They have been watching TV all day."
+                ]
+            },
+            {
+                number: 5,
+                name: "Simple Past",
+                fullName: "5) Simple Past (Past Indefinite)",
+                structures: [
+                    { subject: "All subjects", formula: "Subject + V2 + Object", explanation: "Completed actions in the past (specific time)." }
+                ],
+                indicators: "yesterday, ago, last week, last month, last year, in 2000, a few minutes ago, earlier, then, previously, once, that day, when (with past time), recently (if clearly past), in the past",
+                examples: [
+                    "I ate rice yesterday.",
+                    "She played football last evening.",
+                    "They helped their friends last week."
+                ]
+            },
+            {
+                number: 6,
+                name: "Past Continuous",
+                fullName: "6) Past Continuous (Past Progressive)",
+                structures: [
+                    { subject: "I / He / She / It / We / You / They", formula: "Subject + was/were + V1-ing", explanation: "Past action in progress at a specific past time / interrupted action." }
+                ],
+                indicators: "while, when (interrupting), at that moment, at 8 pm yesterday, all day yesterday, yesterday morning, during the game, at that time, then, as, in the meantime, for a while (in past), throughout the day (past), continuously (past context)",
+                examples: [
+                    "I was eating when you called.",
+                    "She was playing at 5 PM.",
+                    "They were watching TV all evening."
+                ]
+            },
+            {
+                number: 7,
+                name: "Past Perfect",
+                fullName: "7) Past Perfect",
+                structures: [
+                    { subject: "All subjects", formula: "Subject + had + V3", explanation: "Action completed before another past event." }
+                ],
+                indicators: "by the time, before, after (in past sequence), already (in past context), had already, prior to, previously, until then, earlier that day, before that, by then, up to that point (past)",
+                examples: [
+                    "I had eaten before you came.",
+                    "She had played before it rained.",
+                    "They had helped before the teacher arrived."
+                ]
+            },
+            {
+                number: 8,
+                name: "Past Perfect Continuous",
+                fullName: "8) Past Perfect Continuous",
+                structures: [
+                    { subject: "All subjects", formula: "Subject + had been + V1-ing", explanation: "Action had been continuing up to a point in the past (duration emphasis)." }
+                ],
+                indicators: "had been, for (duration) + (past), since (past point), all day yesterday, for two hours before, before that, up until then, previously, earlier, by the time, continuously (past), prior to that moment",
+                examples: [
+                    "I had been eating for 2 hours.",
+                    "She had been playing all morning.",
+                    "They had been watching for 3 hours."
+                ]
+            },
+            {
+                number: 9,
+                name: "Simple Future",
+                fullName: "9) Simple Future (will / going to)",
+                structures: [
+                    { subject: "All subjects", formula: "Subject + will + V1 (or is/am/are going to + V1)", explanation: "Future actions, spontaneous decisions (will) or planned/intended (going to)." }
+                ],
+                indicators: "tomorrow, next week, next month, soon, in a few days, later, shortly, in the future, tonight (future use), later on, this coming week, will (auxiliary), going to, plan to, intend to, scheduled, due to",
+                examples: [
+                    "I will eat tomorrow.",
+                    "She will play next week.",
+                    "They are going to help you."
+                ]
+            },
+            {
+                number: 10,
+                name: "Future Continuous",
+                fullName: "10) Future Continuous",
+                structures: [
+                    { subject: "All subjects", formula: "Subject + will be + V1-ing", explanation: "Action that will be in progress at a specific time in future." }
+                ],
+                indicators: "at this time tomorrow, this time next week, in the morning (future), at 8 pm tomorrow, all day tomorrow, during the trip (future), next week at this time, will be, while (future context), then",
+                examples: [
+                    "I will be eating at 8 PM.",
+                    "She will be playing tomorrow.",
+                    "They will be watching all evening."
+                ]
+            },
+            {
+                number: 11,
+                name: "Future Perfect",
+                fullName: "11) Future Perfect",
+                structures: [
+                    { subject: "All subjects", formula: "Subject + will have + V3", explanation: "Action that will be completed before a specific future time." }
+                ],
+                indicators: "by (then), by tomorrow, by next week, by the time, before (a future point), will have, already (future perfect), completed by, prior to that time, in two years' time (completed before)",
+                examples: [
+                    "I will have eaten by 8 PM.",
+                    "She will have played by evening.",
+                    "They will have helped by tomorrow."
+                ]
+            },
+            {
+                number: 12,
+                name: "Future Perfect Continuous",
+                fullName: "12) Future Perfect Continuous",
+                structures: [
+                    { subject: "All subjects", formula: "Subject + will have been + V1-ing", explanation: "Emphasizes duration of an action up to a point in the future." }
+                ],
+                indicators: "will have been, for (duration) by then, by next year for, for two hours by then, by the time, for many years by, continuously until, up to that point, by then, before (future point), how long by then",
+                examples: [
+                    "I will have been eating for 2 hours.",
+                    "She will have been playing all day.",
+                    "They will have been watching for hours."
+                ]
+            }
+        ];
+
+        const tensesGrid = document.getElementById('tensesGrid');
+        const tenseContent = document.getElementById('tenseContent');
+
+        // Create tense buttons with numbers
+        tensesData.forEach((tense, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'tense-btn';
+            btn.innerHTML = `
+                <div class="tense-number">${tense.number}</div>
+                <span>${tense.name}</span>
+            `;
+            btn.dataset.index = index;
+            btn.onclick = () => showTense(index);
+            tensesGrid.appendChild(btn);
+        });
+
+        function showTense(index) {
+            document.querySelectorAll('.tense-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+
+            const tense = tensesData[index];
+            tenseContent.innerHTML = createTenseContent(tense);
+            tenseContent.classList.add('active');
+        }
+
+        function createTenseContent(tense) {
+            let html = `
+                <div class="tense-header">
+                    <h2>${tense.fullName}</h2>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject (Singular / Plural)</th>
+                                <th>Structure / Formula</th>
+                                <th>Short Explanation</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+            tense.structures.forEach(structure => {
+                html += `
+                            <tr>
+                                <td>${structure.subject}</td>
+                                <td><strong>${structure.formula}</strong></td>
+                                <td>${structure.explanation}</td>
+                            </tr>`;
+            });
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="examples-section">
+                    <h3>💡 Examples:</h3>`;
+
+            tense.examples.forEach(example => {
+                html += `<div class="example">${example}</div>`;
+            });
+
+            html += `</div>
+                
+                <div class="indicators">
+                    <h3>🔍 Indicators (recognize this tense):</h3>
+                    <p>${tense.indicators}</p>
+                </div>
+                <button class="back-btn" onclick="hideContent()">← Back to All Tenses (1-12)</button>`;
+
+            return html;
+        }
+
+        function hideContent() {
+            document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.tense-btn').forEach(btn => btn.classList.remove('active'));
+        }
+    </script>
+</body>
+
+</html>
